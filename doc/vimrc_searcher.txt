@@ -1,0 +1,103 @@
+*vimrc_searcher.txt*	For Vim version 8.0 and Neovim 0.5+	Last change: YYYY MM DD
+
+==============================================================================
+CONTENTS                                                  *vimrc_searcher*
+
+1. Introduction.........................................|vimrc_searcher-intro|
+2. Usage..................................................|vimrc_searcher-usage|
+3. Installation.....................................|vimrc_searcher-installation|
+4. Configuration................................|vimrc_searcher-configuration|
+5. Mapping............................................|vimrc_searcher-mapping|
+
+==============================================================================
+INTRODUCTION                                          *vimrc_searcher-intro*
+
+`vimrc_searcher` is a simple plugin that provides a command to search the
+contents of your main Vim/Neovim configuration file (`$MYVIMRC`) using fzf.
+It displays the lines with line numbers and allows you to jump directly to
+the selected line.
+
+Requires:
+- `fzf` command-line tool (https://github.com/junegunn/fzf)
+- `fzf.vim` plugin (https://github.com/junegunn/fzf.vim)
+
+==============================================================================
+USAGE                                                 *vimrc_searcher-usage*
+
+                                                        *:SearchVimrc*
+:SearchVimrc
+		Opens an fzf window listing the lines of your `$MYVIMRC` file,
+		prefixed with line numbers. Type to filter the lines.
+		Pressing Enter on a line will open `$MYVIMRC` and jump to
+		that specific line number.
+
+==============================================================================
+INSTALLATION                                      *vimrc_searcher-installation*
+
+Use your preferred plugin manager.
+
+Using |vim-plug|:
+>
+	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Dependency
+	Plug 'junegunn/fzf.vim'                         " Dependency
+	Plug 'path/to/your/vimrc-search-fzf'            " Or your GitHub path
+<
+Using |packer.nvim|:
+>
+	use {
+	  'junegunn/fzf',
+	  run = function() fzf#install() end,
+	}
+	use 'junegunn/fzf.vim' -- Dependency
+	use 'path/to/your/vimrc-search-fzf' -- Or your GitHub path
+<
+Using |lazy.nvim|:
+>
+  {
+    "junegunn/fzf",
+    build = function() fzf#install() end,
+  },
+  {
+    "junegunn/fzf.vim",
+    dependencies = { "junegunn/fzf" },
+  },
+  {
+    "path/to/your/vimrc-search-fzf", -- Or your GitHub path
+    dependencies = { "junegunn/fzf.vim" },
+    cmd = "SearchVimrc", -- Optional: lazy-load on command
+  },
+<
+Manual Installation (using Vim packages):
+  mkdir -p ~/.config/nvim/pack/plugins/start  (or ~/.vim/pack/plugins/start)
+  cd ~/.config/nvim/pack/plugins/start
+  git clone <repository_url> vimrc-search-fzf
+
+After installation, generate help tags if needed:
+>
+	:helptags ALL
+<
+
+==============================================================================
+CONFIGURATION                                     *vimrc_searcher-configuration*
+
+This plugin currently has no specific configuration options. It relies on the
+standard `$MYVIMRC` environment variable set by Vim/Neovim and the default
+behavior of `fzf.vim`.
+
+==============================================================================
+MAPPING                                               *vimrc_searcher-mapping*
+
+The plugin does not define any mappings by default. You can create your own
+mapping in your `init.vim` or `init.lua`.
+
+Example mapping in `init.vim`:
+>
+	nnoremap <silent> <leader>fv :SearchVimrc<CR>
+<
+Example mapping in `init.lua`:
+>
+	vim.keymap.set("n", "<leader>fv", "<Cmd>SearchVimrc<CR>", { silent = true, desc = "Search Vimrc (fzf)" })
+<
+
+==============================================================================
+ vim:tw=78:ts=8:noet:ft=help:norl:
