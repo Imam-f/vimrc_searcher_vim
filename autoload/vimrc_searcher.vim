@@ -20,9 +20,9 @@ function! vimrc_searcher#SearchContent() abort
   " Run fzf
   call fzf#run({
         \ 'source': s:lines_with_numbers,
-        \ 'sink': function('vimrc_searcher#JumpToLine'), " Call the autoloaded jump function
+        \ 'sink': function('vimrc_searcher#JumpToLine'),
         \ 'options': '--prompt "Search Config > " --layout=reverse --border --height 40%',
-        \ 'down': '40%'
+        \ 'down': '40%',
         \ })
 endfunction
 
